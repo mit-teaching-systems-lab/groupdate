@@ -1,0 +1,34 @@
+.Swipeable {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow-y: hidden;
+}
+
+.Swipeable-spring {
+  position: relative;
+  width: 100%;
+}
+
+.Swipeable-views {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Swipeable-left {
+  flex: 1;
+  background-color: rgb(37, 214, 137);
+}
+
+.Swipeable-children {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Swipeable-right {
+  flex: 1;
+  background-color: rgb(226, 170, 22);
+}

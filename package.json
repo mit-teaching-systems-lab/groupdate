@@ -1,16 +1,41 @@
 {
   "name": "groupdate",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.0"
+  "license": "MIT",
+  "engines": {
+    "node": "6.11.x"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "install": "cd client && YARN_PRODUCTION=false yarn install",
+    "start": "yarn run dev",
+    "test": "yarn run lint && yarn run jest && cd client && yarn run test",
+    "heroku-postbuild": "cd client && yarn run build",
+    "dev": "concurrently \"yarn run server-dev\" \"yarn run client\" \"yarn run storybook\"",
+    "server": "node server/index.js",
+    "server-dev": "NODE_ENV=development DATABASE_URL=http://localhost:5432 yarn run server",
+    "client": "cd client && yarn run start",
+    "storybook": "cd client && yarn run storybook",
+    "lint": "eslint --ext js -c server/.eslintrc server scripts",
+    "jest": "NODE_ENV=test jest server --ci"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ],
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "jest": "^21.2.1",
+    "lodash": "^4.17.4",
+    "node-fetch": "^1.7.3",
+    "node-mocks-http": "^1.6.6",
+    "pg": "^7.3.0",
+    "superagent": "^3.6.3",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0",
+    "eslint": "^4.8.0",
+    "eslint-plugin-node": "^5.2.0"
   }
 }
