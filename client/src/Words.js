@@ -9,10 +9,13 @@ class Words extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: ''
+      words: '',
+      error: null
     };
     this.onNext = this.onNext.bind(this);
     this.onChangeWords = this.onChangeWords.bind(this);
+    this.onPostDone = this.onPostDone.bind(this);
+    this.onPostError = this.onPostError.bind(this);
   }
 
   componentDidMount() {
@@ -28,12 +31,27 @@ class Words extends Component {
   }
 
   onNext() {
+    const {code} = this.props;
     const {words} = this.state;
+    this.props.doPostCard(code, words)
+      .then(this.onPostDone.bind(this, words))
+      .catch(this.onPostError);
+  }
+
+  onPostDone(words, json) {
     this.props.onNext(words);
   }
 
+  onPostError(error) {
+    this.setState({error});
+  }
+
   render() {
+    const {limit} = this.props;
     const {words} = this.state;
+    const wordsLeft = (words === '')
+      ? limit
+      : limit - words.trim().split(' ').length;
 
     return (
       <div className="Words">
@@ -47,13 +65,21 @@ class Words extends Component {
             placeholder="..."
             value={words}
             onChange={this.onChangeWords} />
-          <TappableButton onClick={this.onNext}>Share</TappableButton>
+          <p
+            className="Words-left"
+            style={{color: wordsLeft > 0 ? 'black' : 'red'}}>{wordsLeft} words left</p>
+          <TappableButton
+            disabled={wordsLeft < 0}
+            onClick={this.onNext}>Next</TappableButton>
         </div>
       </div>
     );
   }
 }
 Words.propTypes = {
+  code: PropTypes.string.isRequired,
+  limit: PropTypes.number.isRequired,
+  doPostCard: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired
 };
 

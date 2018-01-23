@@ -2,7 +2,13 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const {enforceHTTPS} = require('./util/https.js');
-
+const {createPool} = require('./util/database.js');
+const {
+  cardsEndpoint,
+  addCardEndpoint,
+  addRatingEndpoint,
+  groupingsEndpoint
+} = require('./endpoints.js');
 
 // config
 const config = {
@@ -20,8 +26,7 @@ const config = {
 const app = express();
 app.use(bodyParser.json());
 app.use(enforceHTTPS);
-// const {createPool} = require('./util/database.js');
-// const pool = createPool(config.postgresUrl);
+const pool = createPool(config.postgresUrl);
 
 
 // Endpoints for the game
@@ -29,6 +34,10 @@ app.get('/hello', (req, res) => {
   res.set('Content-Type', 'application/json');
   res.json({ status: 'ok' });
 });
+app.get('/games/:code/cards', cardsEndpoint.bind(null, pool));
+app.post('/games/:code/card', addCardEndpoint.bind(null, pool));
+app.post('/cards/:card/rating', addRatingEndpoint.bind(null, pool));
+app.get('/games/:code/groupings', groupingsEndpoint.bind(null, pool));
 
 
 // Serve any static files.
@@ -37,6 +46,7 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
+
 
 // Start the server
 app.listen(config.port, () => {

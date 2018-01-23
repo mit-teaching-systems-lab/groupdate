@@ -9,17 +9,47 @@ class Wait extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerCount: null
+      cards: [],
+      error: null
     };
+    this.refreshTimer = null;
+    this.refreshResponses = this.refreshResponses.bind(this);
+    this.onFetchDone = this.onFetchDone.bind(this);
+    this.onFetchError = this.onFetchError.bind(this);
     this.onStart = this.onStart.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   }
 
+  // Poll the server for new responses
   componentDidMount() {
-    // fetch
+    this.refreshResponses();
+    this.refreshTimer = setInterval(this.refreshResponses, 3000);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.refreshTimer);
+  }
+
+  refreshResponses() {
+    const {code} = this.props;
+    const url = `/games/${code}/cards`;
+    fetch(url)
+      .then(r => r.json())
+      .then(this.onFetchDone)
+      .catch(this.onFetchError);
+  }
+
+  onFetchDone(json) {
+    this.setState({ cards: json.rows });
+  }
+
+  onFetchError(error) {
+    this.setState({error});
   }
 
   onStart() {
-    this.props.onNext();
+    const {cards} = this.state;
+    this.props.onNext(cards);
   }
 
   onCancel() {
@@ -27,17 +57,20 @@ class Wait extends Component {
   }
 
   render() {
-    const {playerCount} = this.state;
+    const {cards} = this.state;
+    const {code} = this.props;
 
     return (
       <div className="Wait">
         <div className="Wait-content">
           <p>
-            {playerCount === null
+            {cards.length === 0
               ? 'Waiting for pals...'
-              : `Found ${playerCount} ${playerCount === 1 ? 'pal' : 'pals'} and waiting for more...`}
+              : `Group ${code} has ${cards.length} ${cards.length === 1 ? 'pal' : 'pals'}, waiting for more...`}
           </p>
-          <TappableButton onClick={this.onStart}>Start</TappableButton>
+          <TappableButton
+            disabled={cards.length === 0}
+            onClick={this.onStart}>Start</TappableButton>
           <TappableButton
             outerStyle={styles.outerButton}
             style={styles.subtleButton}
@@ -48,6 +81,7 @@ class Wait extends Component {
   }
 }
 Wait.propTypes = {
+  code: PropTypes.string.isRequired,
   onNext: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
 };

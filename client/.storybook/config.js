@@ -1,7 +1,11 @@
 import { configure } from '@storybook/react';
 
 function loadStories() {
-  // require('../src/WorkshopCode.story.js');
+  require('../src/Join.story.js');
+  require('../src/Words.story.js');
+  require('../src/Wait.story.js');
+  require('../src/Swiping.story.js');
+  require('../src/Groupings.story.js');
   // You can require as many stories as you need.
 }
 

@@ -9,10 +9,10 @@ class Join extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupCode: ''
+      code: ''
     };
     this.onStart = this.onStart.bind(this);
-    this.onChangeGroupCode = this.onChangeGroupCode.bind(this);
+    this.onCodeChange = this.onCodeChange.bind(this);
   }
 
   componentDidMount() {
@@ -22,18 +22,18 @@ class Join extends Component {
     }
   }
 
-  onChangeGroupCode(event) {
-    const groupCode = event.target.value.toUpperCase();
-    this.setState({groupCode});
+  onCodeChange(event) {
+    const code = event.target.value.toUpperCase();
+    this.setState({code});
   }
 
   onStart() {
-    const {groupCode} = this.state;
-    this.props.onNext(groupCode);
+    const {code} = this.state;
+    this.props.onNext(code);
   }
 
   render() {
-    const {groupCode} = this.state;
+    const {code} = this.state;
 
     return (
       <div className="Join">
@@ -44,9 +44,9 @@ class Join extends Component {
             className="Join-input"
             type="text"
             placeholder="WXYZ"
-            value={groupCode}
-            onChange={this.onChangeGroupCode} />
-          <TappableButton onClick={this.onStart}>Start</TappableButton>
+            value={code}
+            onChange={this.onCodeChange} />
+          <TappableButton onClick={this.onStart}>Next</TappableButton>
         </div>
       </div>
     );

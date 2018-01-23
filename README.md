@@ -1,11 +1,40 @@
 # groupdate
 
 ...
+## TODO
+- wait polling and coordination
+- swiping
+- grouping words
+- landing page to make new group
+- instructor makes one for n groups, gets code
+...
+- Words: error and loading states
+- favicon
+
 
 ## Development
 To setup locally:
 ```
 $ yarn install
+```
+
+Create database:
+```
+CREATE DATABASE "groupdate";
+\c groupdate;
+CREATE TABLE cards (
+  id serial primary key,
+  code text,
+  text text,
+  timestampz timestamptz
+);
+
+CREATE TABLE swipes (
+  id serial primary key,
+  card_id integer,
+  rating integer,
+  timestampz timestamptz
+);
 ```
 
 ### To develop locally:
