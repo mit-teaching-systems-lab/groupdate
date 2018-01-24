@@ -2,14 +2,16 @@
 
 ...
 ## TODO
-- wait polling and coordination
 - swiping
 - grouping words
-- landing page to make new group
-- instructor makes one for n groups, gets code
+- moar playful
 ...
+- /create to make new groupdate as leader, get code
+- leader coordinates when ready
+- bulk add responses
 - Words: error and loading states
 - favicon
+- gyro play while wait
 
 
 ## Development
@@ -26,13 +28,15 @@ CREATE TABLE cards (
   id serial primary key,
   code text,
   text text,
+  session_id text,
   timestampz timestamptz
 );
 
-CREATE TABLE swipes (
+CREATE TABLE ratings (
   id serial primary key,
   card_id integer,
   rating integer,
+  session_id text,
   timestampz timestamptz
 );
 ```

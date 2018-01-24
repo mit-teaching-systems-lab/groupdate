@@ -18,8 +18,9 @@ class App extends Component {
       sessionId: uuid.v4(),
       screenKey: 'join',
       wordLimit: 6,
-      groupSize: 6,
+      groupCount: 6,
       code: null,
+      myCard: null,
       cards: null
     };
     this.renderScreen = this.renderScreen.bind(this);
@@ -30,19 +31,25 @@ class App extends Component {
     this.onDoneWait = this.onDoneWait.bind(this);
     this.onReset = this.onReset.bind(this);
     this.onDoneSwiping = this.onDoneSwiping.bind(this);
+    this.onPostCardDone = this.onPostCardDone.bind(this);
+    this.onPostCardError = this.onPostCardError.bind(this);
   }
 
   doPostCard(code, text) {
     const {sessionId} = this.state;
     const url = `/games/${code}/card`;
-    return fetch(url, {
+    const options = {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST',
       body: JSON.stringify({text, sessionId})
-    }).then(r => r.json());
+    };
+    return fetch(url, options)
+      .then(r => r.json())
+      .then(this.onPostCardDone)
+      .catch(this.onPostCardError);
   }
 
   // fire and forget
@@ -60,6 +67,15 @@ class App extends Component {
     });
   }
 
+  onPostCardDone(json) {
+    const {card} = json;
+    this.setState({ myCard: card });
+  }
+
+  onPostCardError(err) {
+    console.error('onPostCardError', err); // eslint-disable-line no-console
+  }
+  
   onDoneJoin(code) {
     this.setState({code, screenKey: 'words' 
     });
@@ -98,7 +114,9 @@ class App extends Component {
       screenKey,
       code,
       wordLimit,
-      cards
+      myCard,
+      cards,
+      groupCount
     } = this.state;
 
     if (screenKey === 'join') {
@@ -138,7 +156,8 @@ class App extends Component {
       return (
         <Groupings
           code={code}
-          groupSize={groupSize} />
+          myCard={myCard}
+          groupCount={groupCount} />
       );
     }
 

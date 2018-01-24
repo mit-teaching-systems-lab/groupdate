@@ -22,3 +22,9 @@ html, body, #root, .Global-root-for-testing {
 .Global-background-color {
   background-color: white;
 }
+
+.Global-title {
+  font-size: 24px;
+  margin: 10px;
+  font-weight: bold;
+}

@@ -2,3 +2,16 @@
   flex: 1;
   width: 100%;
 }
+
+.Swiping-card {
+  margin: 15px;
+  padding: 5px;
+  text-align: left;
+  font-size: 32px;
+  height: 150px;
+  border: 1px solid #ccc;
+}
+
+.Swiping-left {
+  text-align: center;
+}

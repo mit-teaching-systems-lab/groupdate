@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Groupings.css';
+import GroupingsView from './GroupingsView';
 
 
 // The Groupings screen
@@ -8,7 +9,7 @@ class Groupings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupings: [{"letter":"a","color":"#a6cee3","cards":[{"id":2,"text":"hriew","score":42},{"id":7,"text":"eeee","score":17}]},{"letter":"b","color":"#1f78b4","cards":[{"id":5,"text":"hello there","score":42}]},{"letter":"c","color":"#b2df8a","cards":[{"id":6,"text":"wat","score":42}]},{"letter":"d","color":"#33a02c","cards":[{"id":3,"text":"rewierw","score":17}]},{"letter":"e","color":"#fb9a99","cards":[{"id":1,"text":"hiya","score":17}]}],
+      groupings: [],
       error: null
     };
     this.refreshTimer = null;
@@ -28,8 +29,8 @@ class Groupings extends Component {
   }
 
   refreshResponses() {
-    const {code, groupSize} = this.props;
-    const url = `/games/${code}/groupings?n=${groupSize}`;
+    const {code, groupCount} = this.props;
+    const url = `/games/${code}/groupings?n=${groupCount}`;
     fetch(url)
       .then(r => r.json())
       .then(this.onFetchDone)
@@ -46,31 +47,18 @@ class Groupings extends Component {
   }
 
   render() {
+    const {code, myCard} = this.props;
     const {groupings} = this.state;
 
     return (
       <div className="Groupings">
         <div className="Groupings-content">
-          <p>
-            {groupings.length === 0
-              ? 'Waiting for pals to finish...'
-              : 'Groupings'}
-          </p>
-          <div>
-            {groupings.map((grouping) => {
-              const {color, letter, cards} = grouping;
-              return (
-                <div key={letter}>
-                  <div style={{background: color}}>group {letter}</div>
-                  <div>
-                    {cards.map((card) => {
-                      return <div key={card.id}>{card.text}</div>;
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {groupings.length === 0
+            ? <p>Waiting for pals to finish...</p>
+            : <GroupingsView
+              groupings={groupings}
+              myCard={myCard}
+              code={code} />}
         </div>
       </div>
     );
@@ -78,7 +66,8 @@ class Groupings extends Component {
 }
 Groupings.propTypes = {
   code: PropTypes.string.isRequired,
-  groupSize: PropTypes.number.isRequired
+  myCard: PropTypes.object.isRequired,
+  groupCount: PropTypes.number.isRequired
 };
 
 

@@ -94,23 +94,31 @@ function createGroupingsFromRatings(rows, groupCount) {
 
 // Adding a card for a game
 function addCardEndpoint(pool, req, res) {
+  res.set('Content-Type', 'application/json');
+
   const {code} = req.params;
   const {text, sessionId} = req.body;
 
   // Write into database
   const sql = `
     INSERT INTO cards(code, text, session_id, timestampz)
-    VALUES ($1, $2, $3, $4)`;
+    VALUES ($1, $2, $3, $4)
+    RETURNING id`;
   const now = new Date();
   const values = [code, text, sessionId, now];
-  pool.query(sql, values).catch(err => {
-    console.log('query returned err: ', err);
-    console.log({ error:err });
-  });
-
-  // Return success no matter what
-  res.set('Content-Type', 'application/json');
-  res.json({ status: 'ok' });
+  pool.query(sql, values)
+    .then(results => {
+      const card = {
+        id: results.rows[0].id,
+        text
+      };
+      res.json({ status: 'ok', card });
+    })
+    .catch(err => {
+      console.log('query returned err: ', err);
+      console.log({ error: err });
+      res.json({ status: 'error' });
+    });
 }
 
 // For receiving cards for a `code`

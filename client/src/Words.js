@@ -56,9 +56,9 @@ class Words extends Component {
     return (
       <div className="Words">
         <div className="Words-content">
-          <p>
+          <div className="Global-title">
             What are you thinking?
-          </p>
+          </div>
           <textarea
             ref={(el) => { this.inputEl = el; }} 
             className="Words-input"

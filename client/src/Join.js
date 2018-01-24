@@ -38,7 +38,7 @@ class Join extends Component {
     return (
       <div className="Join">
         <div className="Join-content">
-          <p>{`What's your group code?`}</p>
+          <div className="Global-title">{`What's your group code?`}</div>
           <input
             ref={(el) => { this.inputEl = el; }} 
             className="Join-input"
