@@ -52,14 +52,12 @@ class Groupings extends Component {
 
     return (
       <div className="Groupings">
-        <div className="Groupings-content">
-          {groupings.length === 0
-            ? <p>Waiting for pals to finish...</p>
-            : <GroupingsView
-              groupings={groupings}
-              myCard={myCard}
-              code={code} />}
-        </div>
+        {groupings.length === 0
+          ? <div className="Groupings-content">Waiting for pals to finish...</div>
+          : <GroupingsView
+            groupings={groupings}
+            myCard={myCard}
+            code={code} />}
       </div>
     );
   }
