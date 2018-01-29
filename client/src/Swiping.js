@@ -27,10 +27,8 @@ class Swiping extends Component {
     this.props.doPostRating(card, rating); // fire and forget
 
     if (updatedRatings.length < cards.length) {
-      console.log('updatedRatings', updatedRatings);
       this.setState({ ratings: updatedRatings });
     } else {
-      console.log('onNext');
       this.props.onNext();
     }
   }
