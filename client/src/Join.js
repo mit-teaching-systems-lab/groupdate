@@ -11,6 +11,7 @@ class Join extends Component {
     this.state = {
       code: ''
     };
+    this.onSubmit = this.onSubmit.bind(this);
     this.onStart = this.onStart.bind(this);
     this.onCodeChange = this.onCodeChange.bind(this);
   }
@@ -23,8 +24,14 @@ class Join extends Component {
   }
 
   onCodeChange(event) {
-    const code = event.target.value.toUpperCase();
+    const code = event.target.value.toLowerCase();
     this.setState({code});
+  }
+
+  // For the enter keypress
+  onSubmit(event) {
+    event.preventDefault();
+    this.onStart();
   }
 
   onStart() {
@@ -37,17 +44,17 @@ class Join extends Component {
 
     return (
       <div className="Join">
-        <div className="Join-content">
+        <form className="Join-content" onSubmit={this.onSubmit}>
           <div className="Global-title">{`What's your group code?`}</div>
           <input
             ref={(el) => { this.inputEl = el; }} 
             className="Join-input"
             type="text"
-            placeholder="WXYZ"
+            placeholder="otter"
             value={code}
             onChange={this.onCodeChange} />
           <TappableButton onClick={this.onStart}>Next</TappableButton>
-        </div>
+        </form>
       </div>
     );
   }

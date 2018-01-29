@@ -2,9 +2,12 @@
 
 ...
 ## TODO
-- swiping
-- grouping words
+- !!fit within phone frame!!
+- simpler grouping
+- fallback: remove "your group" just take top six
 - moar playful
+- do people get distributed between groups
+- feel: see all topics
 ...
 - /create to make new groupdate as leader, get code
 - leader coordinates when ready
@@ -12,6 +15,11 @@
 - Words: error and loading states
 - favicon
 - gyro play while wait
+
+ideas:
+- machine learning by words
+- restart > add more
+
 
 
 ## Development

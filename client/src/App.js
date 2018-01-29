@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       sessionId: uuid.v4(),
       screenKey: 'join',
-      wordLimit: 6,
+      wordLimit: 10,
       groupCount: 6,
       code: null,
       myCard: null,

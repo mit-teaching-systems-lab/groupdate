@@ -57,7 +57,7 @@ class Words extends Component {
       <div className="Words">
         <div className="Words-content">
           <div className="Global-title">
-            What are you thinking?
+            What are you thinking about?
           </div>
           <textarea
             ref={(el) => { this.inputEl = el; }} 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import './GroupingsView.css';
 
@@ -7,25 +6,23 @@ import './GroupingsView.css';
 // The GroupingsView screen
 class GroupingsView extends Component {
   render() {
-    const {myCard, groupings} = this.props;
-    const myGrouping = _.find(groupings, grouping => {
-      return _.find(grouping.cards, card => card.id === myCard.id) !== undefined;
-    });
-    const sortedGroupings = _.sortBy(groupings, (grouping, index) => {
-      return (grouping === myGrouping) ? -1 : -1 * index;
-    });
+    const {groupings} = this.props;
     return (
       <div className="GroupingsView">
         <div className="GroupingsView-content">
-          <div className="GroupingsView-title">you matched: group {myGrouping.letter}</div>
+          <div className="GroupingsView-title">Go start a conversation!</div>
+          <div style={{padding: 10}}>Pick a group to start with, but you can talk about anything you want within those groups.</div>
           <div>
-            {sortedGroupings.map((grouping) => {
+            {groupings.map((grouping) => {
               const {color, letter, cards} = grouping;
               return (
-                <div key={letter} className="GroupingsView-grouping" style={{backgroundColor: color}}>
+                <div
+                  key={letter}
+                  className="GroupingsView-grouping"
+                  style={{backgroundColor: color, border: `5px solid ${color}`}}>
                   <div className="GroupingsView-title">group {letter}</div>
                   <div className="GroupingsView-cards">
-                    {cards.map((card) => {
+                    {cards.slice(0, 1).map((card) => {
                       return <div
                         key={card.id}
                         className="GroupingsView-card">{card.text}</div>;
@@ -35,6 +32,29 @@ class GroupingsView extends Component {
               );
             })}
           </div>
+          {this.renderOthers(groupings)}
+        </div>
+      </div>
+    );
+  }
+
+  renderOthers(groupings) {
+    const color = 'white';
+    return (
+      <div
+        key="other"
+        className="GroupingsView-grouping"
+        style={{backgroundColor: color, border: `5px solid ${color}`}}>
+        <div className="GroupingsView-title">all the other good ideas</div>
+        <div className="GroupingsView-cards">
+          {groupings.map(grouping => {
+            const {cards} = grouping;
+            return cards.map(card => {
+              return <div
+                key={card.id}
+                className="GroupingsView-card">{card.text}</div>;
+            });
+          })}
         </div>
       </div>
     );
