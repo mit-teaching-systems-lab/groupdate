@@ -46,7 +46,7 @@ class Join extends Component {
     return (
       <div className="Join">
         <div style={{textAlign: 'center', marginTop: 0, marginBottom: 10}}>
-          <div className="Global-title" style={{position: 'absolute', left: 20, top: 30, color: 'black', fontSize:36}}>groupdate</div>
+          <div className="Global-title" style={{position: 'absolute', left: 15, top: 15, color: 'black', fontSize:36}}>groupdate</div>
           <img src={logo} width="100%" />
         </div>
         <form className="Global-content" action="#" onSubmit={this.onSubmit}>
