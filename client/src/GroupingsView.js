@@ -62,7 +62,6 @@ class GroupingsView extends Component {
 }
 GroupingsView.propTypes = {
   groupings: PropTypes.arrayOf(PropTypes.object).isRequired,
-  myCard: PropTypes.object.isRequired,
   code: PropTypes.string.isRequired
 };
 

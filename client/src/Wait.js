@@ -17,7 +17,7 @@ class Wait extends Component {
     this.onFetchDone = this.onFetchDone.bind(this);
     this.onFetchError = this.onFetchError.bind(this);
     this.onStart = this.onStart.bind(this);
-    this.onCancel = this.onCancel.bind(this);
+    this.onAddMore = this.onAddMore.bind(this);
   }
 
   // Poll the server for new responses
@@ -52,8 +52,8 @@ class Wait extends Component {
     this.props.onNext(cards);
   }
 
-  onCancel() {
-    this.props.onCancel();
+  onAddMore() {
+    this.props.onAddMore();
   }
 
   render() {
@@ -70,11 +70,11 @@ class Wait extends Component {
           </div>
           <TappableButton
             disabled={cards.length === 0}
-            onClick={this.onStart}>Start</TappableButton>
+            onClick={this.onStart}>Start swiping</TappableButton>
           <TappableButton
             outerStyle={styles.outerButton}
             style={styles.subtleButton}
-            onClick={this.onCancel}>Restart</TappableButton>
+            onClick={this.onAddMore}>Add another thought</TappableButton>
         </div>
       </div>
     );
@@ -83,7 +83,7 @@ class Wait extends Component {
 Wait.propTypes = {
   code: PropTypes.string.isRequired,
   onNext: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onAddMore: PropTypes.func.isRequired
 };
 
 

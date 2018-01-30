@@ -19,13 +19,20 @@ class Groupings extends Component {
   }
 
   // Poll the server for new responses
+  // Save URL for refresh
   componentDidMount() {
     this.refreshResponses();
     this.refreshTimer = setInterval(this.refreshResponses, 3000);
+    this.setUrl();
   }
 
   componentWillUnmount(){
     clearInterval(this.refreshTimer);
+  }
+
+  setUrl() {
+    const {code} = this.props;
+    window.history.replaceState({}, '', `/groups/${code}`);
   }
 
   refreshResponses() {
@@ -47,7 +54,7 @@ class Groupings extends Component {
   }
 
   render() {
-    const {code, myCard} = this.props;
+    const {code} = this.props;
     const {groupings} = this.state;
 
     return (
@@ -56,7 +63,6 @@ class Groupings extends Component {
           ? <div className="Global-content">Waiting for pals to finish...</div>
           : <GroupingsView
             groupings={groupings}
-            myCard={myCard}
             code={code} />}
       </div>
     );
@@ -64,7 +70,6 @@ class Groupings extends Component {
 }
 Groupings.propTypes = {
   code: PropTypes.string.isRequired,
-  myCard: PropTypes.object.isRequired,
   groupCount: PropTypes.number.isRequired
 };
 

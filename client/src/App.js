@@ -24,12 +24,13 @@ class App extends Component {
       cards: null
     };
     this.renderScreen = this.renderScreen.bind(this);
+    this.renderGroups = this.renderGroups.bind(this);
     this.doPostCard = this.doPostCard.bind(this);
     this.doPostRating = this.doPostRating.bind(this);
     this.onDoneJoin = this.onDoneJoin.bind(this);
     this.onDoneWords = this.onDoneWords.bind(this);
     this.onDoneWait = this.onDoneWait.bind(this);
-    this.onReset = this.onReset.bind(this);
+    this.onAddMore = this.onAddMore.bind(this);
     this.onDoneSwiping = this.onDoneSwiping.bind(this);
     this.onPostCardDone = this.onPostCardDone.bind(this);
     this.onPostCardError = this.onPostCardError.bind(this);
@@ -89,8 +90,8 @@ class App extends Component {
     this.setState({cards, screenKey: 'swiping' });
   }
 
-  onReset() {
-    this.setState({ screenKey: 'join' });
+  onAddMore() {
+    this.setState({ screenKey: 'words' });
   }
 
   onDoneSwiping() {
@@ -100,11 +101,12 @@ class App extends Component {
   render() {
     return (
       <MobileSimulator minWidth={800} minHeight={400}>
-        <div className="App">
-          <BrowserRouter>
+        <BrowserRouter>
+          <div className="App">
             <Route exact path="/" render={this.renderScreen} />
-          </BrowserRouter>
-        </div>
+            <Route exact path="/groups/:code" render={this.renderGroups} />
+          </div>
+        </BrowserRouter>
       </MobileSimulator>
     );
   }
@@ -114,9 +116,7 @@ class App extends Component {
       screenKey,
       code,
       wordLimit,
-      myCard,
       cards,
-      groupCount
     } = this.state;
 
     if (screenKey === 'join') {
@@ -138,7 +138,7 @@ class App extends Component {
         <Wait
           code={code}
           onNext={this.onDoneWait}
-          onCancel={this.onReset} />
+          onAddMore={this.onAddMore} />
       );
     }
 
@@ -153,15 +153,16 @@ class App extends Component {
     }
 
     if (screenKey === 'groupings') {
-      return (
-        <Groupings
-          code={code}
-          myCard={myCard}
-          groupCount={groupCount} />
-      );
+      return this.renderGroups(code);
     }
 
     return <div>not yet...</div>;
+  }
+
+  renderGroups(props) {
+    const {code} = props.match.params;
+    const {groupCount} = this.state;
+    return <Groupings code={code} groupCount={groupCount} />;
   }
 }
 
