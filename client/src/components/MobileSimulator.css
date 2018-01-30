@@ -11,7 +11,7 @@
 .MobileSimulator-not-wide {
   flex: 1;
   display: flex;
-  width: 375px;
+  width: 320px;
   background: white;
 }
 
