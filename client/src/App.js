@@ -25,6 +25,7 @@ class App extends Component {
     };
     this.renderScreen = this.renderScreen.bind(this);
     this.renderGroups = this.renderGroups.bind(this);
+    this.renderGroupsFromUrl = this.renderGroupsFromUrl.bind(this);
     this.doPostCard = this.doPostCard.bind(this);
     this.doPostRating = this.doPostRating.bind(this);
     this.onDoneJoin = this.onDoneJoin.bind(this);
@@ -104,7 +105,7 @@ class App extends Component {
         <BrowserRouter>
           <div className="App">
             <Route exact path="/" render={this.renderScreen} />
-            <Route exact path="/groups/:code" render={this.renderGroups} />
+            <Route exact path="/groups/:code" render={this.renderGroupsFromUrl} />
           </div>
         </BrowserRouter>
       </MobileSimulator>
@@ -159,8 +160,12 @@ class App extends Component {
     return <div>not yet...</div>;
   }
 
-  renderGroups(props) {
+  renderGroupsFromUrl(props) {
     const {code} = props.match.params;
+    return this.renderGroups(code);
+  }
+
+  renderGroups(code) {
     const {groupCount} = this.state;
     return <Groupings code={code} groupCount={groupCount} />;
   }

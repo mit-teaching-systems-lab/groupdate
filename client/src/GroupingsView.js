@@ -49,7 +49,7 @@ class GroupingsView extends Component {
         <div className="GroupingsView-cards">
           {groupings.map(grouping => {
             const {cards} = grouping;
-            return cards.map(card => {
+            return cards.slice(1).map(card => {
               return <div
                 key={card.id}
                 className="GroupingsView-card">{card.text}</div>;
