@@ -72,7 +72,7 @@ class Wait extends Component {
           <img src={gif} style={{marginBottom: 20}} alt="waiting..." width="100%" />
           <TappableButton
             disabled={cards.length === 0}
-            onClick={this.onStart}>We are ready</TappableButton>
+            onClick={this.onStart}>{`We're all ready to start`}</TappableButton>
           <TappableButton
             outerStyle={styles.outerButton}
             style={styles.subtleButton}
