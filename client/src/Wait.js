@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TappableButton from './components/TappableButton';
+import gif from './waiting.gif';
 import './Wait.css';
 
 
@@ -68,6 +69,7 @@ class Wait extends Component {
               ? 'Waiting for pals...'
               : `Group ${code} has ${cards.length} ${cards.length === 1 ? 'pal' : 'pals'}, waiting for more...`}
           </div>
+          <img src={gif} style={{marginBottom: 20}} alt="waiting..." width="100%" />
           <TappableButton
             disabled={cards.length === 0}
             onClick={this.onStart}>Start swiping</TappableButton>
