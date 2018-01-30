@@ -53,7 +53,7 @@ class Groupings extends Component {
     return (
       <div className="Groupings">
         {groupings.length === 0
-          ? <div className="Groupings-content">Waiting for pals to finish...</div>
+          ? <div className="Global-content">Waiting for pals to finish...</div>
           : <GroupingsView
             groupings={groupings}
             myCard={myCard}

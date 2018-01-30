@@ -2,9 +2,3 @@
   flex: 1;
   width: 100%;
 }
-
-.Groupings-content {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}

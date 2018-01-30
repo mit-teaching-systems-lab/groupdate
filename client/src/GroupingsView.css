@@ -3,12 +3,6 @@
   width: 100%;
 }
 
-.GroupingsView-content {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
-
 .GroupingsView-card {
   padding: 15px;
   text-align: left;

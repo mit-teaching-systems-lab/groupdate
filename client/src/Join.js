@@ -44,7 +44,7 @@ class Join extends Component {
 
     return (
       <div className="Join">
-        <form className="Join-content" onSubmit={this.onSubmit}>
+        <form className="Global-content" action="#" onSubmit={this.onSubmit}>
           <div className="Global-title">{`What's your group code?`}</div>
           <input
             ref={(el) => { this.inputEl = el; }} 
@@ -53,7 +53,8 @@ class Join extends Component {
             placeholder="otter"
             value={code}
             onChange={this.onCodeChange} />
-          <TappableButton onClick={this.onStart}>Next</TappableButton>
+          <input type="button" value="Next" style={{display: 'none'}} />
+          <TappableButton disabled={code.length === 0} onClick={this.onStart}>Next</TappableButton>
         </form>
       </div>
     );

@@ -62,7 +62,7 @@ class Wait extends Component {
 
     return (
       <div className="Wait">
-        <div className="Wait-content">
+        <div className="Global-content">
           <div className="Global-title">
             {cards.length === 0
               ? 'Waiting for pals...'

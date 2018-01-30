@@ -43,7 +43,7 @@ class Swiping extends Component {
     
     return (
       <div className="Swiping">
-        <div className="Swiping-content">
+        <div className="Global-content">
           <div className="Global-title">Swipe right if you want to talk more, left if not.</div>
           <p className="Swiping-left">{remainingCount} more</p>
           <Swipeable

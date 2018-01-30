@@ -3,11 +3,6 @@
   width: 100%;
 }
 
-.Words-content {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
 
 .Words-input {
   margin: 15px;

@@ -28,3 +28,11 @@ html, body, #root, .Global-root-for-testing {
   margin: 10px;
   font-weight: bold;
 }
+
+.Global-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}

@@ -12,6 +12,7 @@ class Words extends Component {
       words: '',
       error: null
     };
+    this.onSubmit = this.onSubmit.bind(this);
     this.onNext = this.onNext.bind(this);
     this.onChangeWords = this.onChangeWords.bind(this);
     this.onPostDone = this.onPostDone.bind(this);
@@ -38,6 +39,12 @@ class Words extends Component {
       .catch(this.onPostError);
   }
 
+  // For the enter keypress
+  onSubmit(event) {
+    event.preventDefault();
+    this.onNext();
+  }
+
   onPostDone(words, json) {
     this.props.onNext(words);
   }
@@ -55,7 +62,7 @@ class Words extends Component {
 
     return (
       <div className="Words">
-        <div className="Words-content">
+        <form className="Global-content" action="#" onSubmit={this.onSubmit}>
           <div className="Global-title">
             What are you thinking about?
           </div>
@@ -63,6 +70,7 @@ class Words extends Component {
             ref={(el) => { this.inputEl = el; }} 
             className="Words-input"
             placeholder="..."
+            rows="1"
             value={words}
             onChange={this.onChangeWords} />
           <p
@@ -71,7 +79,7 @@ class Words extends Component {
           <TappableButton
             disabled={wordsLeft < 0}
             onClick={this.onNext}>Next</TappableButton>
-        </div>
+        </form>
       </div>
     );
   }

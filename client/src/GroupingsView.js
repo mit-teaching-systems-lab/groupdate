@@ -9,7 +9,7 @@ class GroupingsView extends Component {
     const {groupings} = this.props;
     return (
       <div className="GroupingsView">
-        <div className="GroupingsView-content">
+        <div className="Global-content">
           <div className="GroupingsView-title">Go start a conversation!</div>
           <div style={{padding: 10}}>Pick a group to start with, but you can talk about anything you want within those groups.</div>
           <div>

@@ -3,13 +3,6 @@
   width: 100%;
 }
 
-.Join-content {
-  flex: 1;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
 .Join-input {
   margin: 30px;
   text-align: center;
