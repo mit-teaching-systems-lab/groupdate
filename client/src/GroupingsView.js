@@ -10,7 +10,7 @@ class GroupingsView extends Component {
     return (
       <div className="GroupingsView">
         <div className="Global-content">
-          <div className="GroupingsView-title">Go start a conversation!</div>
+          <div className="Global-title">Go start a conversation!</div>
           <div style={{padding: 10}}>Pick a group to start with, but you can talk about anything you want within those groups.</div>
           <div>
             {groupings.map((grouping) => {

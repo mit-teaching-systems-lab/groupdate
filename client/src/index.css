@@ -34,5 +34,6 @@ html, body, #root, .Global-root-for-testing {
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
   width: 90%;
 }
