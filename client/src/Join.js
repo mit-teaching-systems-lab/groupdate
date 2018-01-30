@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TappableButton from './components/TappableButton';
+import logo from './groupdate.jpeg';
 import './Join.css';
 
 
@@ -44,6 +45,10 @@ class Join extends Component {
 
     return (
       <div className="Join">
+        <div style={{textAlign: 'center', marginTop: 0, marginBottom: 10}}>
+          <div className="Global-title" style={{position: 'absolute', left: 20, top: 30, color: 'black', fontSize:36}}>groupdate</div>
+          <img src={logo} width="100%" />
+        </div>
         <form className="Global-content" action="#" onSubmit={this.onSubmit}>
           <div className="Global-title">{`What's your group code?`}</div>
           <input
