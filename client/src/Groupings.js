@@ -32,7 +32,7 @@ class Groupings extends Component {
 
   setUrl() {
     const {code} = this.props;
-    window.history.replaceState({}, '', `/groups/${code}`);
+    window.history.pushState({}, '', `/groups/${code}`);
   }
 
   refreshResponses() {

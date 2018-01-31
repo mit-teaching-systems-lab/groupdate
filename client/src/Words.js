@@ -77,7 +77,7 @@ class Words extends Component {
             className="Words-left"
             style={{color: wordsLeft > 0 ? 'black' : 'red'}}>{wordsLeft} words left</p>
           <TappableButton
-            disabled={wordsLeft < 0}
+            disabled={words === '' || wordsLeft < 0}
             onClick={this.onNext}>Next</TappableButton>
         </form>
       </div>

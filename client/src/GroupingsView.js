@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import TappableButton from './components/TappableButton';
 import './GroupingsView.css';
 
 
 // The GroupingsView screen
 class GroupingsView extends Component {
+  constructor(props) {
+    super(props);
+    this.onRestart = this.onRestart.bind(this);
+  }
+
+  onRestart() {
+    window.location = window.location.origin;
+  }
+
   render() {
     const {groupings} = this.props;
     return (
@@ -33,6 +44,7 @@ class GroupingsView extends Component {
             })}
           </div>
           {this.renderOthers(groupings)}
+          {this.renderRestart()}
         </div>
       </div>
     );
@@ -40,22 +52,37 @@ class GroupingsView extends Component {
 
   renderOthers(groupings) {
     const color = 'white';
+    const cards = _.flatten(groupings.map(grouping => {
+      const {cards} = grouping;
+      return cards.slice(1);
+    }));
+
+    if (cards.length === 0) return null;
+
     return (
       <div
         key="other"
-        className="GroupingsView-grouping"
+        className="GroupingsView-grouping GroupingsView-other"
         style={{backgroundColor: color, border: `5px solid ${color}`}}>
-        <div className="GroupingsView-title">all the other good ideas</div>
+        <div className="GroupingsView-title">all the other good thoughts</div>
         <div className="GroupingsView-cards">
-          {groupings.map(grouping => {
-            const {cards} = grouping;
-            return cards.slice(1).map(card => {
-              return <div
-                key={card.id}
-                className="GroupingsView-card">{card.text}</div>;
-            });
+          {cards.map(card => {
+            return <div
+              key={card.id}
+              className="GroupingsView-card">{card.text}</div>;
           })}
         </div>
+      </div>
+    );
+  }
+
+  renderRestart() {
+    return (
+      <div style={{marginBottom: 20, marginTop: 50}}>
+        <TappableButton
+          outerStyle={styles.outerButton}
+          style={styles.subtleButton}
+          onClick={this.onRestart}>Restart with another group code</TappableButton>
       </div>
     );
   }
@@ -65,5 +92,15 @@ GroupingsView.propTypes = {
   code: PropTypes.string.isRequired
 };
 
+
+const styles = {
+  outerButton: {
+    marginTop: 10
+  },
+  subtleButton: {
+    backgroundColor: '#eee',
+    color: 'black'
+  }
+};
 
 export default GroupingsView;

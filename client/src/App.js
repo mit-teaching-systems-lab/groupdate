@@ -8,6 +8,7 @@ import Wait from './Wait';
 import Swiping from './Swiping';
 import Groupings from './Groupings';
 import './App.css';
+import gif from './waiting.gif';
 
 
 // The main entry point for the app, routing to different pages.
@@ -37,6 +38,12 @@ class App extends Component {
     this.onPostCardError = this.onPostCardError.bind(this);
   }
 
+  // Optimization to prefetch subsequent image
+  componentDidMount() {
+    const image = new Image();
+    image.src = gif;
+  }
+  
   doPostCard(code, text) {
     const {sessionId} = this.state;
     const url = `/games/${code}/card`;

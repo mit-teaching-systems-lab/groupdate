@@ -6,7 +6,8 @@
 .GroupingsView-card {
   padding: 15px;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
+  color: white;
 }
 
 .GroupingsView-grouping {
@@ -18,7 +19,14 @@
   font-size: 20px;
   padding: 10px;
   font-weight: bold;
+  color: white;
 }
 
 .GroupingsView-cards {
+}
+
+.GroupingsView-other .GroupingsView-title,
+.GroupingsView-other .GroupingsView-card {
+  background-color: white !important;
+  color: black !important;
 }
