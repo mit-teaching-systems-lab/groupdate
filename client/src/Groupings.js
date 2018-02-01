@@ -10,6 +10,7 @@ class Groupings extends Component {
     super(props);
     this.state = {
       groupings: [],
+      votesCount: 0,
       error: null
     };
     this.refreshTimer = null;
@@ -45,8 +46,8 @@ class Groupings extends Component {
   }
 
   onFetchDone(json) {
-    const {groupings} = json;
-    this.setState({groupings});
+    const {groupings, votesCount} = json;
+    this.setState({groupings, votesCount});
   }
 
   onFetchError(error) {
@@ -55,15 +56,16 @@ class Groupings extends Component {
 
   render() {
     const {code} = this.props;
-    const {groupings} = this.state;
+    const {groupings, votesCount} = this.state;
 
     return (
       <div className="Groupings">
         {groupings.length === 0
           ? <div className="Global-content">Waiting for pals to finish...</div>
           : <GroupingsView
+            code={code}
             groupings={groupings}
-            code={code} />}
+            votesCount={votesCount} />}
       </div>
     );
   }

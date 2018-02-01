@@ -19,7 +19,7 @@ class App extends Component {
       sessionId: uuid.v4(),
       screenKey: 'join',
       wordLimit: 10,
-      groupCount: 6,
+      groupCount: 5,
       code: null,
       myCard: null,
       cards: null

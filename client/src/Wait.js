@@ -67,7 +67,7 @@ class Wait extends Component {
           <div className="Global-title">
             {cards.length === 0
               ? 'Waiting for pals...'
-              : `Group ${code} has ${cards.length} ${cards.length === 1 ? 'pal' : 'pals'}, waiting for more...`}
+              : `Found ${cards.length} awesome ${cards.length === 1 ? 'thought' : 'thoughts'} about ${code}, waiting for more...`}
           </div>
           <img src={gif} style={{marginBottom: 20}} alt="waiting..." width="100%" />
           <TappableButton

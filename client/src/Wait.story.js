@@ -10,6 +10,6 @@ storiesOf('Wait', module) //eslint-disable-line no-undef
       <Wait
         code="foo"
         onNext={action('onNext')}
-        onCancel={action('onCancel')} />
+        onAddMore={action('onAddMore')} />
     );
   });

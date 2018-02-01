@@ -83,13 +83,15 @@ function createGroupingsFromRatings(rows, groupCount) {
     '#ffff99',
     '#b15928',
   ];
-  return cardsForGroupings.map((cards, index) => {
+  const groupings = cardsForGroupings.map((cards, index) => {
     return {
       letter: letters[index],
       color: colors[index],
       cards: _.compact(cards)
     };
   });
+
+  return {groupings, votesCount: rows.length};
 }
 
 // Adding a card for a game
@@ -174,9 +176,11 @@ function groupingsEndpoint(pool, req, res) {
       console.log('query returned err: ', err);
       res.json({ status: 'error' });
     })
-    .then(groupings => {
+    .then(groupingsResult => {
+      const {groupings, votesCount} = groupingsResult;
       res.json({
         status: 'ok',
+        votesCount,
         groupCount,
         groupings: groupings
       });

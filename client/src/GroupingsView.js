@@ -17,12 +17,16 @@ class GroupingsView extends Component {
   }
 
   render() {
-    const {groupings} = this.props;
+    const {groupings, votesCount} = this.props;
+
     return (
       <div className="GroupingsView">
         <div className="Global-content">
-          <div className="Global-title">Go start a conversation!</div>
-          <div style={{padding: 10}}>Pick a group to start with, but you can talk about anything you want within those groups.</div>
+          <div className="Global-title">With {votesCount} swipes so far... {`here's`} what folks are thinking about.</div>
+          <div style={{padding: 10}}>
+            <div></div>
+            <div>Pick a group to start with, then talk about anything you want with anyone you want.</div>
+          </div>
           <div>
             {groupings.map((grouping) => {
               const {color, letter, cards} = grouping;
@@ -64,7 +68,7 @@ class GroupingsView extends Component {
         key="other"
         className="GroupingsView-grouping GroupingsView-other"
         style={{backgroundColor: color, border: `5px solid ${color}`}}>
-        <div className="GroupingsView-title">all the other good thoughts</div>
+        <div className="GroupingsView-title">more good thoughts</div>
         <div className="GroupingsView-cards">
           {cards.map(card => {
             return <div
@@ -89,6 +93,7 @@ class GroupingsView extends Component {
 }
 GroupingsView.propTypes = {
   groupings: PropTypes.arrayOf(PropTypes.object).isRequired,
+  votesCount: PropTypes.number.isRequired,
   code: PropTypes.string.isRequired
 };
 

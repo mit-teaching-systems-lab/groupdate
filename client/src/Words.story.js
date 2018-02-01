@@ -7,6 +7,14 @@ import Words from './Words';
 storiesOf('Words', module) //eslint-disable-line no-undef
   .add('normal', () => {
     return withFrameSwitcher(
-      <Words limit={6} onNext={action('onNext')} />
+      <Words
+        code="foo"
+        limit={6}
+        doPostCard={() => {
+          action('doPostCard');
+          return Promise.resolve({});
+        }}
+        onNext={action('onNext')} />
     );
   });
+  
