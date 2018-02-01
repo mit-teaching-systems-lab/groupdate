@@ -1,16 +1,10 @@
 # groupdate
 
-...
-## TODO
-- /create to make new groupdate as leader, get code
-- leader coordinates when ready
-- gyro play while wait
+<a href="https://groupdate.herokuapp.com/?github"><img src="docs/try.png" width="124" height="53" alt="Try it!"/></a>
 
-ideas:
-- machine learning by words
-- restart > add more
+An app for sharing thoughts in larger groups, skimming them quickly and finding what people want to discuss further.
 
-
+  <a style="display: block; text-align: center;" href="https://groupdate.herokuapp.com/?github"><p align="center"><img alt="Splash screen" src="docs/groupdate.png" width="380" /></p></a>
 
 ## Development
 To setup locally:
