@@ -4,7 +4,7 @@
 
 An app for sharing thoughts in larger groups, skimming them quickly and finding what people want to discuss further.
 
-  <a style="display: block; text-align: center;" href="https://groupdate.herokuapp.com/?github"><p align="center"><img alt="Splash screen" src="docs/groupdate.png" width="380" /></p></a>
+  <a style="display: block; text-align: center;" href="https://groupdate.herokuapp.com/?github"><p align="center"><img alt="Splash screen" src="docs/one.png" width="380" /><img alt="Groups" src="docs/two.png" width="380" /></p></a>
 
 ## Development
 To setup locally:
