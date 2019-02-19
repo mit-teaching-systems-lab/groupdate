@@ -39,12 +39,12 @@ class Swiping extends Component {
     const remainingCount = cards.length - ratings.length;
 
     const card = this.currentCard();
-    const {id, text} = card;
+    const {id, text, src} = card;
     
     return (
       <div className="Swiping">
         <div className="Global-content">
-          <div className="Global-title">Swipe right if you want to talk more, left if not.</div>
+          <div className="Global-title">Swipe right if the animal is cute, left if not.</div>
           <p className="Swiping-left">{remainingCount} more</p>
           <Swipeable
             key={id}
@@ -52,7 +52,9 @@ class Swiping extends Component {
             onSwipeRight={this.onSwipe.bind(this, card, 1)}
             onSwipeLeft={this.onSwipe.bind(this, card, 0)}
           >
-            <div className="Swiping-card">&quot;{text}&quot;</div>
+            <div className="Swiping-card" style={{overflow: 'hidden'}}>
+              <img src={src} alt={text} height="auto" width="100%" />
+            </div>
           </Swipeable>
         </div>
       </div>

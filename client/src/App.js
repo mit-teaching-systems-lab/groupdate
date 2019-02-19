@@ -3,13 +3,14 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import uuid from 'uuid';
 import MobileSimulator from './components/MobileSimulator.js';
 import Join from './Join';
-import Words from './Words';
-import Wait from './Wait';
+// import Words from './Words';
+// import Wait from './Wait';
 import Swiping from './Swiping';
 import Groupings from './Groupings';
+import Predict from './Predict';
 import './App.css';
 import gif from './waiting.gif';
-
+import cards from './cards';
 
 // The main entry point for the app, routing to different pages.
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
       wordLimit: 10,
       groupCount: 5,
       code: null,
+      name: null,
       myCard: null,
       cards: null
     };
@@ -30,8 +32,8 @@ class App extends Component {
     this.doPostCard = this.doPostCard.bind(this);
     this.doPostRating = this.doPostRating.bind(this);
     this.onDoneJoin = this.onDoneJoin.bind(this);
-    this.onDoneWords = this.onDoneWords.bind(this);
-    this.onDoneWait = this.onDoneWait.bind(this);
+    // this.onDoneWords = this.onDoneWords.bind(this);
+    // this.onDoneWait = this.onDoneWait.bind(this);
     this.onAddMore = this.onAddMore.bind(this);
     this.onDoneSwiping = this.onDoneSwiping.bind(this);
     this.onPostCardDone = this.onPostCardDone.bind(this);
@@ -43,7 +45,7 @@ class App extends Component {
     const image = new Image();
     image.src = gif;
   }
-  
+
   doPostCard(code, text) {
     const {sessionId} = this.state;
     const url = `/games/${code}/card`;
@@ -62,8 +64,9 @@ class App extends Component {
   }
 
   // fire and forget
+  // change this to only send predictions of model at the end
   doPostRating(card, rating) {
-    const {sessionId} = this.state;
+    const {sessionId, name} = this.state;
     const cardId = card.id;
     const url = `/cards/${cardId}/rating`;
     return fetch(url, {
@@ -72,7 +75,7 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({cardId, rating, sessionId})
+      body: JSON.stringify({cardId, name, rating, sessionId})
     });
   }
 
@@ -85,18 +88,17 @@ class App extends Component {
     console.error('onPostCardError', err); // eslint-disable-line no-console
   }
   
-  onDoneJoin(code) {
-    this.setState({code, screenKey: 'words' 
-    });
+  onDoneJoin({code, name}) {
+    this.setState({code, name, screenKey: 'swiping' });
   }
 
-  onDoneWords() {
-    this.setState({ screenKey: 'wait' });
-  }
+  // onDoneWords() {
+  //   this.setState({ screenKey: 'wait' });
+  // }
 
-  onDoneWait(cards) {
-    this.setState({cards, screenKey: 'swiping' });
-  }
+  // onDoneWait(cards) {
+  //   this.setState({cards, screenKey: 'swiping' });
+  // }
 
   onAddMore() {
     this.setState({ screenKey: 'words' });
@@ -123,38 +125,42 @@ class App extends Component {
     const {
       screenKey,
       code,
-      wordLimit,
-      cards,
+      // wordLimit,
     } = this.state;
+
+    const testML = true;
+    if (testML) {
+      return <Predict />;
+    }
 
     if (screenKey === 'join') {
       return <Join onNext={this.onDoneJoin} />;
     }
 
-    if (screenKey === 'words') {
-      return (
-        <Words
-          code={code}
-          limit={wordLimit}
-          doPostCard={this.doPostCard}
-          onNext={this.onDoneWords} />
-      );
-    }
+    // if (screenKey === 'words') {
+    //   return (
+    //     <Words
+    //       code={code}
+    //       limit={wordLimit}
+    //       doPostCard={this.doPostCard}
+    //       onNext={this.onDoneWords} />
+    //   );
+    // }
 
-    if (screenKey === 'wait') {
-      return (
-        <Wait
-          code={code}
-          onNext={this.onDoneWait}
-          onAddMore={this.onAddMore} />
-      );
-    }
+    // if (screenKey === 'wait') {
+    //   return (
+    //     <Wait
+    //       code={code}
+    //       onNext={this.onDoneWait}
+    //       onAddMore={this.onAddMore} />
+    //   );
+    // }
 
     if (screenKey === 'swiping') {
       return (
         <Swiping
           code={code}
-          cards={cards}
+          cards={cards()}
           doPostRating={this.doPostRating}
           onNext={this.onDoneSwiping} />
       );
