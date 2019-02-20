@@ -128,10 +128,10 @@ class App extends Component {
       // wordLimit,
     } = this.state;
 
-    const testML = true;
-    if (testML) {
-      return <Predict />;
-    }
+    // const testML = true;
+    // if (testML) {
+    //   return <Predict />;
+    // }
 
     if (screenKey === 'join') {
       return <Join onNext={this.onDoneJoin} />;
