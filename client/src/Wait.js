@@ -23,12 +23,12 @@ class Wait extends Component {
 
   // Poll the server for new responses
   componentDidMount() {
-    this.refreshResponses();
-    this.refreshTimer = setInterval(this.refreshResponses, 3000);
+    // this.refreshResponses();
+    // this.refreshTimer = setInterval(this.refreshResponses, 3000);
   }
 
   componentWillUnmount(){
-    clearInterval(this.refreshTimer);
+    // clearInterval(this.refreshTimer);
   }
 
   refreshResponses() {
@@ -58,25 +58,18 @@ class Wait extends Component {
   }
 
   render() {
-    const {cards} = this.state;
-    const {code} = this.props;
-
+    const msg = 'Waiting for pals...';
     return (
       <div className="Wait">
         <div className="Global-content">
-          <div className="Global-title">
-            {cards.length === 0
-              ? 'Waiting for pals...'
-              : `Found ${cards.length} awesome ${cards.length === 1 ? 'thought' : 'thoughts'} about ${code}, waiting for more...`}
-          </div>
+          <div className="Global-title">{msg}</div>
           <img src={gif} style={{marginBottom: 20}} alt="waiting..." width="100%" />
           <TappableButton
-            disabled={cards.length === 0}
             onClick={this.onStart}>{`We're all ready to start`}</TappableButton>
           <TappableButton
             outerStyle={styles.outerButton}
             style={styles.subtleButton}
-            onClick={this.onAddMore}>Add another thought</TappableButton>
+            onClick={this.onAddMore}>Retrain your model</TappableButton>
         </div>
       </div>
     );

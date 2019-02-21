@@ -24,7 +24,7 @@ class Swiping extends Component {
     const {cards} = this.props;
     const {ratings} = this.state;
     const updatedRatings = ratings.concat([rating]);
-    this.props.doPostRating(card, rating); // fire and forget
+    this.props.doStoreLabel(card, rating); // fire and forget
 
     if (updatedRatings.length < cards.length) {
       this.setState({ ratings: updatedRatings });
@@ -34,7 +34,7 @@ class Swiping extends Component {
   }
 
   render() {
-    const {cards} = this.props;
+    const {cards, modelEl} = this.props;
     const {ratings} = this.state;
     const remainingCount = cards.length - ratings.length;
 
@@ -44,7 +44,7 @@ class Swiping extends Component {
     return (
       <div className="Swiping">
         <div className="Global-content">
-          <div className="Global-title">Swipe right if the animal is cute, left if not.</div>
+          <div className="Global-title">Swipe right to teach {modelEl} that the animal is cute, left if not.</div>
           <p className="Swiping-left">{remainingCount} more</p>
           <Swipeable
             key={id}
@@ -62,9 +62,10 @@ class Swiping extends Component {
   }
 }
 Swiping.propTypes = {
+  modelEl: PropTypes.node.isRequired,
   code: PropTypes.string.isRequired,
   cards: PropTypes.arrayOf(PropTypes.object).isRequired,
-  doPostRating: PropTypes.func.isRequired,
+  doStoreLabel: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired
 };
 

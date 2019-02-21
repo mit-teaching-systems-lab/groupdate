@@ -1,12 +1,12 @@
-# groupdate
+# labelit
 
-<a href="https://groupdate.herokuapp.com/?github"><img src="docs/try.png" width="124" height="53" alt="Try it!"/></a>
+<a href="https://label-it.herokuapp.com/?github"><img src="docs/try.png" width="124" height="53" alt="Try it!"/></a>
 
-An app for sharing thoughts in larger groups, skimming them quickly and finding what people want to discuss further.
-
-  <a style="display: block; text-align: center;" href="https://groupdate.herokuapp.com/?github"><p align="center"><img alt="Splash screen" src="docs/one.png" width="380" /><img alt="Groups" src="docs/two.png" width="380" /></p></a>
+An app for labeling images to train your very own image classifier model in the browser.
 
 ## Development
+This project was adapted from https://github.com/mit-teaching-systems-lab/groupdate
+
 To setup locally:
 ```
 $ yarn install
@@ -42,7 +42,7 @@ This will run the server and the create-react-app development server in parallel
 
 Note that the site is responsive and will include a fake frame for an iPhone 5 running Safari at desktop resolution.
 
-Running `yarn start` will also start a [storybook](https://github.com/storybooks/storybook) server on port 9001.  You can use this to create "stories" iterate on UI features.
+Running `yarn storybook` separately will also start a [storybook](https://github.com/storybooks/storybook) server on port 9001.  You can use this to create "stories" iterate on UI features.
 
 
 ### To run tests:

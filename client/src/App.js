@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import uuid from 'uuid';
+import _ from 'lodash';
 import MobileSimulator from './components/MobileSimulator.js';
 import Join from './Join';
 // import Words from './Words';
-// import Wait from './Wait';
+import Wait from './Wait';
 import Swiping from './Swiping';
-import Groupings from './Groupings';
-import Predict from './Predict';
+import Training from './Training';
+// import Predict from './Predict';
+import Splash from './Splash';
 import './App.css';
 import gif from './waiting.gif';
 import cards from './cards';
@@ -18,22 +20,22 @@ class App extends Component {
     super(props);
     this.state = {
       sessionId: uuid.v4(),
-      screenKey: 'join',
+      modelText: sampleModelText(),
+      screenKey: 'splash',
       wordLimit: 10,
       groupCount: 5,
       code: null,
-      name: null,
       myCard: null,
-      cards: null
+      cards: null,
+      labels: []
     };
     this.renderScreen = this.renderScreen.bind(this);
     this.renderGroups = this.renderGroups.bind(this);
     this.renderGroupsFromUrl = this.renderGroupsFromUrl.bind(this);
-    this.doPostCard = this.doPostCard.bind(this);
-    this.doPostRating = this.doPostRating.bind(this);
+    this.doStoreLabel = this.doStoreLabel.bind(this);
+    this.onDoneSplash = this.onDoneSplash.bind(this);
     this.onDoneJoin = this.onDoneJoin.bind(this);
-    // this.onDoneWords = this.onDoneWords.bind(this);
-    // this.onDoneWait = this.onDoneWait.bind(this);
+    this.onDoneWait = this.onDoneWait.bind(this);
     this.onAddMore = this.onAddMore.bind(this);
     this.onDoneSwiping = this.onDoneSwiping.bind(this);
     this.onPostCardDone = this.onPostCardDone.bind(this);
@@ -46,37 +48,13 @@ class App extends Component {
     image.src = gif;
   }
 
-  doPostCard(code, text) {
-    const {sessionId} = this.state;
-    const url = `/games/${code}/card`;
-    const options = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({text, sessionId})
-    };
-    return fetch(url, options)
-      .then(r => r.json())
-      .then(this.onPostCardDone)
-      .catch(this.onPostCardError);
+  doStoreLabel(card, rating) {
+    const labels = this.state.labels.concat({card, rating});
+    this.setState({labels});
   }
 
-  // fire and forget
-  // change this to only send predictions of model at the end
-  doPostRating(card, rating) {
-    const {sessionId, name} = this.state;
-    const cardId = card.id;
-    const url = `/cards/${cardId}/rating`;
-    return fetch(url, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({cardId, name, rating, sessionId})
-    });
+  onDoneSplash() {
+    this.setState({screenKey: 'join'});
   }
 
   onPostCardDone(json) {
@@ -88,24 +66,24 @@ class App extends Component {
     console.error('onPostCardError', err); // eslint-disable-line no-console
   }
   
-  onDoneJoin({code, name}) {
-    this.setState({code, name, screenKey: 'swiping' });
+  onDoneJoin({code}) {
+    this.setState({code, screenKey: 'swiping' });
   }
 
   // onDoneWords() {
   //   this.setState({ screenKey: 'wait' });
   // }
 
-  // onDoneWait(cards) {
-  //   this.setState({cards, screenKey: 'swiping' });
-  // }
+  onDoneWait(cards) {
+    this.setState({cards, screenKey: 'groupings' });
+  }
 
   onAddMore() {
-    this.setState({ screenKey: 'words' });
+    this.setState({ screenKey: 'swiping' });
   }
 
   onDoneSwiping() {
-    this.setState({ screenKey: 'groupings' });
+    this.setState({ screenKey: 'wait' });
   }
 
   render() {
@@ -125,16 +103,23 @@ class App extends Component {
     const {
       screenKey,
       code,
+      modelText,
+      labels
       // wordLimit,
     } = this.state;
 
+    const modelEl = renderModelEl(modelText);
     // const testML = true;
     // if (testML) {
     //   return <Predict />;
     // }
 
+    if (screenKey === 'splash') {
+      return <Splash onNext={this.onDoneSplash} />;
+    }
+
     if (screenKey === 'join') {
-      return <Join onNext={this.onDoneJoin} />;
+      return <Join modelEl={modelEl} onNext={this.onDoneJoin} />;
     }
 
     // if (screenKey === 'words') {
@@ -147,27 +132,29 @@ class App extends Component {
     //   );
     // }
 
-    // if (screenKey === 'wait') {
-    //   return (
-    //     <Wait
-    //       code={code}
-    //       onNext={this.onDoneWait}
-    //       onAddMore={this.onAddMore} />
-    //   );
-    // }
 
     if (screenKey === 'swiping') {
       return (
         <Swiping
+          modelEl={modelEl}
           code={code}
           cards={cards()}
-          doPostRating={this.doPostRating}
+          doStoreLabel={this.doStoreLabel}
           onNext={this.onDoneSwiping} />
       );
     }
 
+    if (screenKey === 'wait') {
+      return (
+        <Wait
+          code={code}
+          onNext={this.onDoneWait}
+          onAddMore={this.onAddMore} />
+      );
+    }
+
     if (screenKey === 'groupings') {
-      return this.renderGroups(code);
+      return this.renderGroups(code, labels);
     }
 
     return <div>not yet...</div>;
@@ -175,13 +162,59 @@ class App extends Component {
 
   renderGroupsFromUrl(props) {
     const {code} = props.match.params;
-    return this.renderGroups(code);
+    const labels = [{
+      "card": {
+        "id": 101,
+        "src": "/static/media/alexandru-zdrobau-176844-unsplash.22c0c14b.jpg",
+        "text": "alexandru"
+      },
+      "rating": 1
+    }, {
+      "card": {
+        "id": 102,
+        "src": "/static/media/elias-castillo-747678-unsplash.9a3587f3.jpg",
+        "text": "elias"
+      },
+      "rating": 0
+    }, {
+      "card": {
+        "id": 103,
+        "src": "/static/media/iqbal-muakhid-749549-unsplash.a4cf62b6.jpg",
+        "text": "iqbal"
+      },
+      "rating": 1
+    }];
+    return this.renderGroups(code, labels);
   }
 
-  renderGroups(code) {
-    const {groupCount} = this.state;
-    return <Groupings code={code} groupCount={groupCount} />;
+  renderGroups(code, labels) {
+    const {groupCount, modelText} = this.state;
+    return (
+      <Training
+        modelEl={renderModelEl(modelText)}
+        labels={labels}
+        code={code}
+        groupCount={groupCount}
+      />
+    );
   }
 }
 
 export default App;
+
+
+const COLORS = 'orange blue red purple black green brown gray'.split(' ');
+const NUMBERS = 'one two three four five six seven eight nine ten'.split(' ');
+const LETTERS = 'A B C F G H I J K L M N O P Q R S T U V W X Y Z'.split(' ');
+function sampleModelText() {
+  const letter = _.sample(LETTERS);
+  return [
+    _.sample(COLORS),
+    _.sample(NUMBERS),
+    letter + letter
+  ].join('-');
+}
+
+function renderModelEl(modelText) {
+  return <div style={{color: modelText.split('-')[0]}}>{modelText}</div>;
+}

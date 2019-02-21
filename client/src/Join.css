@@ -6,6 +6,13 @@
 .Join-input {
   margin: 20px;
   text-align: center;
-  font-size: 32px;
+  font-size: 22px;
 }
 
+
+.Join-model-text {
+  font-size: 32px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

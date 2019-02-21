@@ -52,7 +52,7 @@
 
 /* positions it within the image */
 .MobileSimulator-safari:before {
-  content: 'tsl.mit.edu/xq/groupdate';
+  content: 'label-it.herokuapp.com';
   font-size: 12px;
   position: relative;
   top: 46px;

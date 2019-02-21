@@ -1,5 +1,5 @@
 {
-  "name": "groupdate",
+  "name": "labelit",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
@@ -7,7 +7,7 @@
     "start": "yarn run dev",
     "test": "yarn run lint && yarn run jest && cd client && yarn run test",
     "heroku-postbuild": "cd client && yarn run build",
-    "dev": "concurrently \"yarn run server-dev\" \"yarn run client\" \"yarn run storybook\"",
+    "dev": "concurrently \"yarn run server-dev\" \"yarn run client\"",
     "server": "node server/index.js",
     "server-dev": "NODE_ENV=development DATABASE_URL=http://localhost:5432/groupdate yarn run server",
     "client": "cd client && yarn run start",
@@ -21,6 +21,8 @@
     "client/node_modules"
   ],
   "dependencies": {
+    "@tensorflow/tfjs": "^0.15.3",
+    "@tensorflow/tfjs-core": "^0.15.4",
     "body-parser": "^1.18.2",
     "express": "^4.16.1",
     "jest": "^21.2.1",
